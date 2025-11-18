@@ -1,0 +1,51 @@
+"use client";
+import { useState } from "react";
+// import { AccountCard } from "../../_components/tabContent/complaints/accounts/AccountCard";
+import { AFilterSelect } from "@/components/form/AFilterSelect";
+import { userTypeOptions } from "@/data/global.data";
+import { Input } from "@/components/ui/input";
+import { APagination } from "@/components/ui/APagination";
+import { UserCard } from "./UserCard";
+
+const Users = () => {
+  const [userType, setUserType] = useState<string>("all");
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const limit = 10;
+
+  return (
+    <div>
+      <div className="flex items-center gap-4 justify-end">
+        <Input
+          name="search"
+          placeholder="Search..."
+          className="w-[250px] h-11"
+        />
+        <AFilterSelect
+          onChange={setUserType}
+          placeholder={"user type"}
+          value={userType}
+          options={userTypeOptions}
+          className="w-[110px]!"
+        />
+      </div>
+      <div className="space-y-3 mt-6">
+        <UserCard />
+        <UserCard />
+        <UserCard />
+        <UserCard />
+        <UserCard />
+        <UserCard />
+        <UserCard />
+      </div>
+      <APagination
+        totalItems={100}
+        itemsPerPage={limit}
+        currentPage={currentPage}
+        onPageChange={(page) => setCurrentPage(page)}
+        setCurrentPage={setCurrentPage}
+      />
+    </div>
+  );
+};
+
+export default Users;
