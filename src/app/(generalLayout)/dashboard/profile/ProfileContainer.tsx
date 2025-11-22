@@ -5,18 +5,29 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProfileHeader from "./ProfileHeader";
 import EditProfileForm from "./EditProfileForm";
 import ChangePasswordForm from "./ChangePasswordForm";
-import { useGetProfileQuery } from "@/redux/api/profileApi";
 import ASpinner from "@/components/ui/ASpinner";
 import AErrorMessage from "@/components/AErrorMessage";
+
 const ProfileContainer = () => {
   const [activeTab, setActiveTab] = useState("edit-profile");
-  const { data, isLoading, isError, error, refetch } = useGetProfileQuery("");
-  console.log("error", error);
+
+  // Dummy data for profile (replace with your actual profile data)
+  const profile = {
+    name: "John Doe",
+    email: "johndoe@example.com",
+    address: "123 Main St, Springfield",
+    photoUrl: "/placeholder.svg?height=120&width=120", // replace with your default avatar URL
+  };
+
+  // Simulate loading and error states
+  const isLoading = false;
+  const isError = false;
+  const error = null;
+  const refetch = () => {};
+
   if (isLoading) return <ASpinner size={150} className="py-56" />;
   if (isError)
     return <AErrorMessage className="py-56" error={error} onRetry={refetch} />;
-
-  const profile = data?.data;
 
   return (
     <div className="min-h-screen bg-card p-6 rounded-lg">

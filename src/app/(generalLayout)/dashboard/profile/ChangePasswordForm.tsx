@@ -9,6 +9,7 @@ import {
 } from "@/validations/auth.validation";
 import { useChangePasswordMutation } from "@/redux/api/authApi";
 import handleMutation from "@/utils/handleMutation";
+import { toast } from "sonner";
 
 const ChangePasswordForm = () => {
   const [changePassword, { isLoading }] = useChangePasswordMutation();
@@ -19,6 +20,7 @@ const ChangePasswordForm = () => {
       newPassword: data.newPassword,
     };
 
+    return toast.success("Password changed successfully");
     handleMutation(payload, changePassword, "Changing password...");
   };
 
