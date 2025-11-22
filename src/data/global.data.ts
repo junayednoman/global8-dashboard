@@ -26,3 +26,8 @@ export const complainTypeOptions = [
   { value: "post", label: "Post" },
   { value: "account", label: "Account" },
 ];
+
+export const earningTypeOptions = [
+  { value: "my", label: "My" },
+  { value: "all", label: "All" },
+];

@@ -4,7 +4,7 @@ export const metadata = {
   title: "Events",
 };
 
-const ProductPage = () => {
+const EventPage = () => {
   return (
     <main>
       <EventContainer />
@@ -12,4 +12,4 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
+export default EventPage;

@@ -24,7 +24,6 @@ const ComplaintsContainer = () => {
   const [complainType, setComplainType] = useState<string>("account");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const limit = 10;
-  console.log("complainType", complainType);
   return (
     <AContainer>
       <PageTitle

@@ -1,77 +1,34 @@
-"use client";
-
-import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
-import { useDeleteSingleNotificationMutation } from "@/redux/api/notificationApi";
-import handleMutation from "@/utils/handleMutation";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
-interface NotificationCardProps {
-  title: string;
-  message: string;
-  timestamp: string;
-  read: boolean;
-  notificationId: string;
-}
-
-const NotificationCard = ({
-  title,
-  message,
-  timestamp,
-  read,
-  notificationId,
-}: NotificationCardProps) => {
-  const [deleteSingleNotification, { isLoading }] =
-    useDeleteSingleNotificationMutation();
-
-  const handleDelete = () => {
-    handleMutation(
-      notificationId,
-      deleteSingleNotification,
-      "Deleting notification..."
-    );
-  };
+export function NotificationCard() {
   return (
-    <div className="p-4 px-6 bg-card rounded-xl">
-      <div className="flex items-center justify-between gap-8">
-        <div>
-          <h6
-            className={`text-xl text-primary-foreground ${
-              read ? "font-medium" : "font-extrabold"
-            }`}
-          >
-            {title}
-          </h6>
-          <p
-            className={`text-primary-foreground m-1 -ml-[1px] ${
-              read ? "font-normal" : "font-bold"
-            }`}
-          >
-            {message}
+    <div className="flex items-center justify-between p-4 rounded-lg border border-border  transition-colors">
+      <div className="flex gap-2">
+        {/* Profile Image */}
+        <Image
+          src={"https://payload-marketing.moonpay.com/api/media/file/vibe.jpg"}
+          alt={"Sarah Johnson"}
+          width={50}
+          height={50}
+          className="rounded-full mr-3 h-[50px] w-[50px]"
+        />
+
+        <div className="flex flex-col">
+          User Activity
+          <p className="text-sm">
+            Your post was reported. Please review and take necessary actions.
           </p>
-          <p className="mt-4 text-sm text-card-foreground">
-            {new Date(timestamp).toLocaleDateString("en-US", {
-              month: "short",
-              day: "numeric",
-              year: "numeric",
-              hour: "numeric",
-              minute: "numeric",
-              hour12: true,
-            })}
-          </p>
+          <p className="text-sm text-muted-foreground mt-2">Oct 12, 2025</p>
         </div>
-        <div className="flex items-center gap-2">
-          <Button
-            className="bg-destructive hover:bg-destructive/80"
-            size="icon"
-            onClick={handleDelete}
-            disabled={isLoading}
-          >
-            <Trash2 className="w-4 h-4 text-accent" />
-          </Button>
-        </div>
+      </div>
+
+      <div className="flex items-center gap-2">
+        <Button className="w-9">
+          <Trash2 />
+        </Button>
       </div>
     </div>
   );
-};
-
-export default NotificationCard;
+}
