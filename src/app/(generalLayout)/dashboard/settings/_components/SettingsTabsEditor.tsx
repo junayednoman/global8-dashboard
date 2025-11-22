@@ -5,13 +5,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Save, Check, Loader2 } from "lucide-react";
 import JoditTextEditor from "@/components/form/ATextEditor";
-import ASpinner from "@/components/ui/ASpinner";
-import AErrorMessage from "@/components/AErrorMessage";
-import {
-  useGetContentsQuery,
-  useUpdateContentMutation,
-} from "@/redux/api/contentApi";
-import handleMutation from "@/utils/handleMutation";
 
 interface ContentSection {
   id: string;
@@ -24,41 +17,27 @@ const SettingsTabsEditor = () => {
   const [savingStates, setSavingStates] = useState<Record<string, boolean>>({});
   const [savedStates, setSavedStates] = useState<Record<string, boolean>>({});
   const [contentSections, setContentSections] = useState<ContentSection[]>([
-    { id: "about", title: "About Us", content: "" },
-    { id: "terms", title: "Terms & Conditions", content: "" },
-    { id: "privacy", title: "Privacy Policy", content: "" },
-    { id: "supports", title: "Supports", content: "" },
-    { id: "faq", title: "FAQ", content: "" },
+    {
+      id: "about",
+      title: "About Us",
+      content: "This is the About Us section content.",
+    },
+    {
+      id: "terms",
+      title: "Terms & Conditions",
+      content: "These are the Terms & Conditions.",
+    },
+    {
+      id: "privacy",
+      title: "Privacy Policy",
+      content: "This is the Privacy Policy content.",
+    },
+    {
+      id: "supports",
+      title: "Supports",
+      content: "This is the Support content.",
+    },
   ]);
-
-  const {
-    data: contentsResponse,
-    isLoading,
-    isError,
-    error,
-    refetch,
-  } = useGetContentsQuery({ page: 1, limit: 1 });
-  const [updateContent] = useUpdateContentMutation();
-  const content = contentsResponse?.data[0];
-
-  // Initialize content sections from API
-  if (content && contentSections.every((section) => !section.content)) {
-    setContentSections([
-      { id: "about", title: "About Us", content: content.aboutUs },
-      {
-        id: "terms",
-        title: "Terms & Conditions",
-        content: content.termsAndConditions,
-      },
-      {
-        id: "privacy",
-        title: "Privacy Policy",
-        content: content.privacyPolicy,
-      },
-      { id: "supports", title: "Supports", content: content.supports },
-      { id: "faq", title: "FAQ", content: content.faq },
-    ]);
-  }
 
   const handleContentChange = (sectionId: string, content: string) => {
     setContentSections((prev) =>
@@ -70,50 +49,20 @@ const SettingsTabsEditor = () => {
   };
 
   const handleSave = (sectionId: string) => {
-    if (!content) return;
+    const section = contentSections.find((s) => s.id === sectionId);
+    if (!section) return;
 
     setSavingStates((prev) => ({ ...prev, [sectionId]: true }));
 
-    const section = contentSections.find((s) => s.id === sectionId);
-    const payload = {
-      id: content._id,
-      aboutUs: sectionId === "about" ? section?.content || "" : content.aboutUs,
-      termsAndConditions:
-        sectionId === "terms"
-          ? section?.content || ""
-          : content.termsAndConditions,
-      privacyPolicy:
-        sectionId === "privacy"
-          ? section?.content || ""
-          : content.privacyPolicy,
-      supports:
-        sectionId === "supports" ? section?.content || "" : content.supports,
-      faq: sectionId === "faq" ? section?.content || "" : content.faq,
-    };
-
-    handleMutation(
-      payload,
-      updateContent,
-      `Saving ${section?.title}...`,
-      () => {
-        setSavedStates((prev) => ({ ...prev, [sectionId]: true }));
-        setTimeout(() => {
-          setSavedStates((prev) => ({ ...prev, [sectionId]: false }));
-        }, 2000);
-        setSavingStates((prev) => ({ ...prev, [sectionId]: false }));
-      }
-    );
+    // Simulate an API save operation with setTimeout
+    setTimeout(() => {
+      setSavedStates((prev) => ({ ...prev, [sectionId]: true }));
+      setTimeout(() => {
+        setSavedStates((prev) => ({ ...prev, [sectionId]: false }));
+      }, 2000);
+      setSavingStates((prev) => ({ ...prev, [sectionId]: false }));
+    }, 1500);
   };
-
-  if (isLoading) return <ASpinner size={150} className="py-64" />;
-  if (isError)
-    return <AErrorMessage error={error} onRetry={refetch} className="py-64" />;
-  if (!content)
-    return (
-      <div className="py-64 text-center text-muted-foreground">
-        No content found
-      </div>
-    );
 
   return (
     <div className="h-screen bg-background flex flex-col">
@@ -148,12 +97,6 @@ const SettingsTabsEditor = () => {
               className="data-[state=active]:bg-primary data-[state=active]:text-card"
             >
               Supports
-            </TabsTrigger>
-            <TabsTrigger
-              value="faq"
-              className="data-[state=active]:bg-primary data-[state=active]:text-card"
-            >
-              FAQ
             </TabsTrigger>
           </TabsList>
 
