@@ -11,8 +11,6 @@ import { LayoutDashboard, LogOut } from "lucide-react";
 import { Separator } from "../ui/separator";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useAppDispatch } from "@/redux/hooks/hooks";
-import { logOut } from "@/redux/slice/authSlice";
 import { navItems } from "@/data/nav.data";
 import handleMutation from "@/utils/handleMutation";
 import { useLogoutMutation } from "@/redux/api/authApi";
@@ -20,7 +18,6 @@ import { toast } from "sonner";
 
 export function NavMain() {
   const pathname = usePathname();
-  const dispatch = useAppDispatch();
   // const [logout] = useLogoutMutation();
   const router = useRouter();
   const [logout] = useLogoutMutation();

@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
-import { AccountCard } from "../../_components/tabContent/complaints/accounts/AccountCard";
 import { AFilterSelect } from "@/components/form/AFilterSelect";
 import { userTypeOptions } from "@/data/global.data";
 import { Input } from "@/components/ui/input";
 import { APagination } from "@/components/ui/APagination";
+import { AccountCard } from "../../complaints/_components/AccountCard";
 
 const Users = () => {
   const [userType, setUserType] = useState<string>("all");

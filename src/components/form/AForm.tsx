@@ -26,7 +26,7 @@ const AForm = <T extends FieldValues>({
   className,
 }: AFormProps<T>) => {
   const form = useForm<T>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema as any),
     defaultValues: defaultValues as DefaultValues<T> | undefined,
   });
 
